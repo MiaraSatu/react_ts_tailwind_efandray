@@ -1,11 +1,23 @@
-import { Component } from "react";
+import { Component, FormEvent, MouseEvent } from "react";
+import Disconnected from "./disconnected/Disconnected"
 
-class Efandray extends Component<{}> {
+type efandrayProps = {
+	// les types de mes props
+}
+type efandrayStates = {
+    // les types de les states
+}
+
+class Efandray extends Component<efandrayProps, efandrayStates> {
+
 	render() {
 		return (
-			<div>
-				Welcome to efandray web site
-			</div>
+			
+            <div className="h-full w-full">
+                <Disconnected />
+            </div>
 		)
 	}
 }
+
+export default Efandray

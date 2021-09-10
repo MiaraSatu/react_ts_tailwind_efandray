@@ -16,3 +16,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#disconnected {
+  background-image: url("./assets/bggreen.jpg");
+  background-size: cover;
+}
+
+#subDisconnected {
+  background-image: url("./assets/vector.jpg");
+  background-size: cover;
+}
