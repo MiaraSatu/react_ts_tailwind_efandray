@@ -7,7 +7,7 @@ const MessagesSection: FunctionComponent<{}> = () => {
         <connectedContext.Consumer>
             {
                 (value) => (
-                    <div className=" w-72 h-full p-2">
+                    <div className=" w-1/5 h-full p-2">
                         {/* header de la section message */}
                         <div className="w-full flex justify-between">
                             <div className="">
