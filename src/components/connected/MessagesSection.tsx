@@ -28,14 +28,14 @@ const MessagesSection: FunctionComponent<{}> = () => {
                             <div className="text-gray-500 uppercase text-xs font-semibold">Active conversations</div>
                             <div className="w-full flex flex-col pt-2">
                                 {
-                                    value?.messages.map( (message) => (
+                                    value?.conversations[0].messages.map( (message) => (
                                         <div className="w-full flex my-2" key={message.id}>
                                             <div className=" w-1/5">
                                                 <img src={"images/"+message.id+".jpg"} alt="myImage" className="w-10 h-10 rounded-full object-cover" />
                                             </div>
                                             <div className=" w-4/5">
                                                 <div className="w-full flex items-center justify-between">
-                                                    <div className="text-sm text-gray-900 font-bold w-3/6 ">{message.sender}</div>
+                                                    <div className="text-sm text-gray-900 font-bold w-3/6 ">{value?.conversations[0].owner}</div>
                                                     <div className="text-xs text-gray-500 text-right">{value?.formateDate(message.createdAt)}</div>
                                                 </div>
                                                 <div className="w-full flex justify-between items-center">

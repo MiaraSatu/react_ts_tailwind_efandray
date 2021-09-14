@@ -2,26 +2,38 @@ import { Component, ChangeEvent, FormEvent } from "react";
 import connectedContext from "../../contexts/connected-context";
 import connectedInterface from "../../contexts/connected-interface";
 import MessagesSection from "./MessagesSection";
+import DefaultMessages from "../../data/DefaultMessages";
 import { formatDistance } from "date-fns";
 import { enGB } from "date-fns/esm/locale";
 
 // our usual types type
+// type messageType = {
+//     id: number,
+//     sender: string,
+//     contains: string,
+//     createdAt: string,
+// }
+
 type messageType = {
-    id: number,
-    sender: string,
-    contains: string,
-    createdAt: string,
+    id: number, contains: string, createdAt: string, mine: boolean
+}
+type conversationType = {
+    owner: string,
+    messages: messageType[]
 }
 
 type connectedProps = {
     // mes props
 }
+
 type connectedStates = {
     // mes states
+    lastIndex: number,
     now: Date,
     newMessage: string,
-    messages: messageType[],
-    conversations: {id: number, message: string, envoi: string, mine: boolean}[],
+    // messages: messageType[],
+    // conversations: {id: number, message: string, envoi: string, mine: boolean}[],
+    conversations: conversationType[],
     formateDate(date: string):string,
     formateString(contains: string, max: number): string
 }
@@ -49,45 +61,53 @@ class Connected extends Component<connectedProps, connectedStates> {
         this.setState({newMessage: e.target.value})
     }
 
-    handleSubmit = (e: FormEvent<HTMLFormElement>):void => {
+    handleSubmit = (e: FormEvent<HTMLFormElement>, owner: string):void => {
         e.preventDefault();
-        const conversations = [...this.state.conversations, {id: 10, message: this.state.newMessage, envoi: new Date().toUTCString(), mine: true}]
-        this.setState({conversations: conversations})
+        const index = this.state.conversations.findIndex( (conversation)=> conversation.owner === owner );
+        const conversations = [...this.state.conversations[index].messages, {id: 110, contains: this.state.newMessage, createdAt: (new Date()).toUTCString, mine: true }]
+        const newConversation = {...this.state.conversations[index]};
+        console.log(conversations);
+
+        // this.setState({conversations: })
         // console.log(new Date().toUTCString())
     }
 
     state = {
+        lastIndex: 0,
         now: new Date(),
         newMessage: '',
-        messages: [{
-                id: 1,
-                sender: "Marc Arison",
-                contains: "Hello frero! why you don't reply me?",
-                createdAt: "2021-09-11 22:04:26",},
-                {id: 2,
-                sender: "Adams",
-                contains: "Lorem ispum, mito pestenada ario nepteda",
-                createdAt: "2021-09-11 22:06:05",},
-                {id: 3,
-                sender: "Allan",
-                contains: "you're welcome my friend!",
-                createdAt: "2021-09-11 22:16:18",},
-                {id: 4,
-                sender: "Rakoto",
-                contains: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam tenetur labore aliquid sequi odio maxime vel, laborum, illo laudantium soluta modi omnis vitae, quisquam reprehenderit consequatur alias non eius excepturi.",
-                createdAt: "2021-09-12 14:23:01",}
-        ],
-        conversations: [
-            {id: 1, message: "Hello frero! why you don't reply me?", envoi: "2021-09-11 22:04:26", mine: false},
-            {id: 2, message: "Hello, oh! im sorry i don't speak english", envoi: "2021-09-11 22:04:26", mine: true},
-            {id: 3, message: "Lorem ispum", envoi: "2021-09-11 22:04:26", mine: false},
-            {id: 5, message: "Quia dolorem blanditiis explicabo?", envoi: "2021-09-12 16:04:03", mine: false},
-            {id: 6, message: "Lorem tatatapany", envoi: "2021-09-12 16:04:03", mine: true},
-            {id: 7, message: "Totam sequi ea aut", envoi: "2021-09-12 16:04:03", mine: true},
-            // {id: 8, message: "Totam sequi ea aut", envoi: "2021-09-12 16:04:03", mine: true},
-            {id: 8, message: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione sint sed aliquam neque dolores reiciendis at nesciunt numquam quidem eum. Deserunt iure amet error perferendis quaerat itaque ad earum laborum?", envoi: "2021-09-12 16:04:03", mine: true},
-            {id: 9, message: "reiciendis at nesciunt numquam quidem eum.quidem eum.", envoi: "2021-09-12 16:04:03", mine: false}
-        ],
+        /*
+        // messages: [{
+        //         id: 1,
+        //         sender: "Marc Arison",
+        //         contains: "Hello frero! why you don't reply me?",
+        //         createdAt: "2021-09-11 22:04:26",},
+        //         {id: 2,
+        //         sender: "Adams",
+        //         contains: "Lorem ispum, mito pestenada ario nepteda",
+        //         createdAt: "2021-09-11 22:06:05",},
+        //         {id: 3,
+        //         sender: "Allan",
+        //         contains: "you're welcome my friend!",
+        //         createdAt: "2021-09-11 22:16:18",},
+        //         {id: 4,
+        //         sender: "Rakoto",
+        //         contains: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam tenetur labore aliquid sequi odio maxime vel, laborum, illo laudantium soluta modi omnis vitae, quisquam reprehenderit consequatur alias non eius excepturi.",
+        //         createdAt: "2021-09-12 14:23:01",}
+        // ],
+        // conversations: [
+        //     {id: 1, message: "Hello frero! why you don't reply me?", envoi: "2021-09-11 22:04:26", mine: false},
+        //     {id: 2, message: "Hello, oh! im sorry i don't speak english", envoi: "2021-09-11 22:04:26", mine: true},
+        //     {id: 3, message: "Lorem ispum", envoi: "2021-09-11 22:04:26", mine: false},
+        //     {id: 5, message: "Quia dolorem blanditiis explicabo?", envoi: "2021-09-12 16:04:03", mine: false},
+        //     {id: 6, message: "Lorem tatatapany", envoi: "2021-09-12 16:04:03", mine: true},
+        //     {id: 7, message: "Totam sequi ea aut", envoi: "2021-09-12 16:04:03", mine: true},
+        //     // {id: 8, message: "Totam sequi ea aut", envoi: "2021-09-12 16:04:03", mine: true},
+        //     {id: 8, message: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ratione sint sed aliquam neque dolores reiciendis at nesciunt numquam quidem eum. Deserunt iure amet error perferendis quaerat itaque ad earum laborum?", envoi: "2021-09-12 16:04:03", mine: true},
+        //     {id: 9, message: "reiciendis at nesciunt numquam quidem eum.quidem eum.", envoi: "2021-09-12 16:04:03", mine: false}
+        // ],
+        */
+        conversations: DefaultMessages,
         formateDate: this.formateDate,
         formateString: this.formateString
     }
@@ -130,25 +150,25 @@ class Connected extends Component<connectedProps, connectedStates> {
                     <div className="overflow-auto">
                         {
                             this.state.conversations.map( conversation => (
-                                <div className="w-full">
+                                <div className="w-full mb-3">
                                     <div className="w-full flex items-end">
-                                        { (!conversation.mine) ? <img src="images/1.jpg" alt="myImage" className="h-7 w-7 object-cover rounded-full mr-3"/> : '' }
+                                        { (!conversation.messages[0].mine) ? <img src="images/1.jpg" alt="myImage" className="h-7 w-7 object-cover rounded-full mr-3"/> : '' }
                                         
-                                        <div className={"flex w-full "+((conversation.mine) ? 'justify-end' : 'justify-start')}>
-                                            <span className={"px-5 py-2 rounded-lg text-sm "+((conversation.mine) ? 'bg-gray-300 text-gray-900 ' : 'bg-indigo-900 text-gray-50' )+" "+((conversation.message.length > 50)? 'block w-2/3': '' )}>
-                                                {conversation.message}
+                                        <div className={"flex w-full "+((conversation.messages[0].mine) ? 'justify-end' : 'justify-start')}>
+                                            <span className={"px-5 py-2 rounded-lg text-sm "+((conversation.messages[0].mine) ? 'bg-gray-300 text-gray-900 ' : 'bg-indigo-900 text-gray-50' )+" "+((conversation.messages[0].contains.length > 50)? 'block w-2/3': '' )}>
+                                                {conversation.messages[0].contains}
                                             </span>
                                         </div>
                                     </div>
-                                    <span className={"block text-xs text-gray-500 "+((conversation.mine) ? 'text-right mr-1' : 'text-left ml-10' )}>
-                                        {this.formateDate(conversation.envoi)}
+                                    <span className={"block text-xs text-gray-500 "+((conversation.messages[0].mine) ? 'text-right mr-1' : 'text-left ml-10' )}>
+                                        {this.formateDate(conversation.messages[0].createdAt)}
                                     </span>
                                 </div>
                             ))
                         }
                     </div>
                     <div className="w-full flex">
-                        <form className="w-full flex items-center justify-between" onSubmit={this.handleSubmit}>
+                        <form className="w-full flex items-center justify-between" onSubmit={(e)=>{this.handleSubmit(e, 'Alexis')}}>
                             <div className="block w-11/12" >
                                 <input type="text" placeholder="Type your message" name="newMessage" value={this.state.newMessage} onChange={this.handleChange} className="w-full border border-gray-300 rounded-2xl text-sm px-3 py-1 focus:outline-none" />
                             </div>
@@ -169,12 +189,12 @@ class Connected extends Component<connectedProps, connectedStates> {
                             <div className="text-xs text-gray-900 py-1 pl-1 pr-3 bg-gray-200 rounded-r-lg">Ramarijaona</div>
                         </div>
                     </div>
-                    <div className=" h-4/5 flex flex-col justify-between">
+                    <div className="flex h-4/5 flex-col justify-between">
                         {/* about friend */}
-                        <div className="w-full rounded-lg p-8 bg-gray-100 border border-gray-200">
+                        <div className="w-full rounded-lg p-8 bg-gray-100 border border-gray-200 text-sm">
                             <img src="images/1.jpg" alt="profil" className="w-20 h-20 rounded-full object-cover object-left mx-auto" />
                             <div className="w-full text-md text-gray-600">
-                                <div className="my-2">
+                                <div className="my-2 flex">
                                     <i className="fas fa-phone-alt"></i><span className="ml-3">ArsonMrc@gmail.com</span>
                                 </div>
                                 <div>
@@ -183,7 +203,7 @@ class Connected extends Component<connectedProps, connectedStates> {
                             </div>
                             <div className="w-full flex">
                                 <button className=" px-4 p-1 mx-auto mt-5 text-blue-600 border border-blue-600 bg-gray-50 rounded-md">
-                                    Archive<i className="fas fa-user-clock"></i>
+                                    Archive<i className="fas fa-user-clock ml-2"></i>
                                 </button>
                             </div>
                         </div>
