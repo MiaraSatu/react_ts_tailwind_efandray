@@ -11,14 +11,14 @@ class RouterEssai extends Component<{}, {}> {
                         <nav>
                             <Link to='/'>Home</Link>
                             <Link to='/about'>About</Link>
-                            <Link to='/other#bottom'>Other</Link>
+                            <Link to='/other'>Other</Link>
                             {/* <a href="/other#bottom">othersss</a> */}
                         </nav>
                     </div>
                 </div>
                 <Route path='/' exact component={Index} />
                 <Route path='/about' component={About} />
-                <Route path='/other' component={Other} />
+                <Route path='/other/:var' render={ (props) => <Other var={props.match.params.var} /> } />
             </Router>
         )
     }
@@ -37,8 +37,9 @@ class About extends Component<{}>{
         )
     }
 }
-class Other extends Component<{}>{
+class Other extends Component<{var: string}>{
     render() {
+        console.log(this.props.var);
         return (
             <>
                 <h3>Other page</h3>
@@ -46,7 +47,6 @@ class Other extends Component<{}>{
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora optio repellat rerum odio pariatur ad quidem unde, dignissimos aspernatur delectus enim magni, quo velit maiores doloribus sint nam vero. Dignissimos?
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora optio repellat rerum odio pariatur ad quidem unde, dignissimos aspernatur delectus enim magni, quo velit maiores doloribus sint nam vero. Dignissimos?
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempora optio repellat rerum odio pariatur ad quidem unde, dignissimos aspernatur delectus enim magni, quo velit maiores doloribus sint nam vero. Dignissimos?
-                    <div id="bottom"></div>
                 </p>
             </>
         )

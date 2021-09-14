@@ -7,7 +7,7 @@ const MessagesSection: FunctionComponent<{}> = () => {
         <connectedContext.Consumer>
             {
                 (value) => (
-                    <div className=" w-1/5 h-full p-2">
+                    <div className=" w-1/5 h-full p-2 overflow-auto">
                         {/* header de la section message */}
                         <div className="w-full flex justify-between">
                             <div className="">
@@ -26,21 +26,21 @@ const MessagesSection: FunctionComponent<{}> = () => {
                         {/* le corp du section messages */}
                         <div className="w-full mt-5">
                             <div className="text-gray-500 uppercase text-xs font-semibold">Active conversations</div>
-                            <div className="w-full flex flex-col pt-2">
+                            <div className="w-full flex flex-col pt-2 overflow-auto">
                                 {
-                                    value?.conversations[0].messages.map( (message) => (
-                                        <div className="w-full flex my-2" key={message.id}>
+                                    value?.conversations.map((conversation) => (
+                                        <div className={"w-full flex py-2 px-2 "+(value?.ownerFocused === conversation.owner ? 'border-l-2 border-blue-600 bg-blue-200' : '' )} key={conversation.messages[0].id+""+conversation.owner} id={conversation.owner} onClick={value?.handleChangeFocusMessage}>
                                             <div className=" w-1/5">
-                                                <img src={"images/"+message.id+".jpg"} alt="myImage" className="w-10 h-10 rounded-full object-cover" />
+                                                <img src={"images/"+(value?.conversations.findIndex((conv) => conv.owner === conversation.owner)+1)+".jpg"} alt="myImage" className="w-10 h-10 rounded-full object-cover" />
                                             </div>
                                             <div className=" w-4/5">
                                                 <div className="w-full flex items-center justify-between">
-                                                    <div className="text-sm text-gray-900 font-bold w-3/6 ">{value?.conversations[0].owner}</div>
-                                                    <div className="text-xs text-gray-500 text-right">{value?.formateDate(message.createdAt)}</div>
+                                                    <div className="text-sm text-gray-900 font-bold w-3/6 ">{conversation.owner}</div>
+                                                    <div className="text-xs text-gray-500 text-right">{value?.formateDate(conversation.messages[conversation.messages.length-1].createdAt)}</div>
                                                 </div>
                                                 <div className="w-full flex justify-between items-center">
                                                     <div className=" w-11/12 text-xs text-black">
-                                                        {value.formateString(message.contains, 30)}
+                                                        {value.formateString(conversation.messages[conversation.messages.length-1].contains, 30)}
                                                     </div>
                                                     <div className="text-xs text-gray-50 bg-red-600 px-1 rounded-full ml-2">
                                                         5
