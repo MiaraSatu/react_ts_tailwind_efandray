@@ -98,13 +98,6 @@ class Connected extends Component<connectedProps, connectedStates> {
                     <div className=" w-16 h-full bg-indigo-900 flex flex-col justify-between rounded-xl text-gray-400 text-center py-5">
                         <div className="text-gray-50 text-3xl"><i className="fas fa-envelope-open"></i></div>
                         <div><i className="far fa-comment-dots"></i></div>
-                        {/* <div><i className="far fa-calendar-alt"></i></div>
-                        <div><i className="fas fa-user-tie"></i></div>
-                        <div><i className="fas fa-users"></i></div>
-                        <div><i className="fas fa-user-clock"></i></div>
-                        <div><i className="fas fa-power-off"></i></div>
-                        <div><i className="fas fa-phone-alt"></i></div>
-                        <div><i className="fas fa-video"></i></div> */}
                     </div>
                     {/* la section qui contient les messages */}
                     <MessagesSection />
@@ -214,4 +207,3 @@ class Connected extends Component<connectedProps, connectedStates> {
 }
 
 export default Connected
-

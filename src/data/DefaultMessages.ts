@@ -61,16 +61,6 @@ const DefaultMessages = [
             {id: 4, contains: "message 5", createdAt: "2021-09-11 22:04:26", mine: false},
         ]
     },
-    {
-        owner: "Meva",
-        messages:[
-            {id: 0, contains: "message 1", createdAt: "2021-09-11 22:04:26", mine: true},
-            {id: 1, contains: "message 2", createdAt: "2021-09-11 22:04:26", mine: true},
-            {id: 2, contains: "message 3", createdAt: "2021-09-11 22:04:26", mine: true},
-            {id: 3, contains: "message 4", createdAt: "2021-09-11 22:04:26", mine: false},
-            {id: 4, contains: "message 5", createdAt: "2021-09-11 22:04:26", mine: true},
-        ]
-    }
 ];
 
 export default DefaultMessages;
