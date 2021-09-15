@@ -1,4 +1,4 @@
-import { createContext, MouseEvent } from "react";
+import { createContext} from "react";
 import discoInterface from "./disco-interface";
 
 const disconnectedContext = createContext<discoInterface | null> (null);
