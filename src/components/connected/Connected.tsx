@@ -164,15 +164,15 @@ class Connected extends Component<connectedProps, connectedStates> {
                                 <img src={"images/"+(this.state.conversations.findIndex(conversation => conversation.owner === this.state.ownerFocused) + 1)+".jpg"} alt="profil" className="w-20 h-20 rounded-full object-cover object-left mx-auto" />
                                 <div className="w-full text-md text-gray-600">
                                     <div className="my-2 flex">
-                                        <i className="fas fa-phone-alt"></i><span className="ml-3">{this.state.ownerFocused}@gmail.com</span>
+                                    <i className="fas fa-at"></i><span className="ml-3">{this.state.ownerFocused}@gmail.com</span>
                                     </div>
                                     <div>
-                                        <i className="fas fa-envelope-open"></i><span className="ml-3">{this.state.ownerFocused}</span>
+                                    <i className="fas fa-user-circle"></i><span className="ml-3">{this.state.ownerFocused}</span>
                                     </div>
                                 </div>
                                 <div className="w-full flex">
                                     <button className=" px-4 p-1 mx-auto mt-5 text-blue-600 border border-blue-600 bg-gray-50 rounded-md">
-                                        Archive<i className="fas fa-user-clock ml-2"></i>
+                                        Archive<i className="fas fa-boxes ml-2"></i>
                                     </button>
                                 </div>
                             </div>
